@@ -18,5 +18,13 @@
         <source>Type query here</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Type search parameters, name or anything</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>More results</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

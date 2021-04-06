@@ -8,7 +8,6 @@ ApplicationWindow
     property bool fetching: false
     property string queryField: ""
     property int pageNumber: 1
-    property int offset: 20
     property string searchUrl: "https://api.finna.fi/v1/search?&page=" + pageNumber
     property var queryResults: ListModel {}
 
@@ -19,23 +18,30 @@ ApplicationWindow
     function fetchQuery(query, more) {
         fetching = true
 
-        if ( !more )
+        if ( !more ) {
             queryResults.clear()
-
+            pageNumber = 0
+        }
         var xhr = new XMLHttpRequest
         var fullQuery = searchUrl + "&lookfor=" + query
         xhr.open("GET", fullQuery)
 
         xhr.onreadystatechange = function() {
 
-            if ( xhr.readyState === XMLHttpRequest.DONE ) {
+            if ( xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 var results = JSON.parse(xhr.responseText)
 
                 for (var index = 0; index<results.records.length; index++) {
                     var item = results.records[index]
+                    var images = "";
+
+                    if (item.images[0])
+                        images = item.images[0]
+
                     queryResults.append({"title": item.title,
-                                         "imgurl": item.images[0],
-                                         "type": item.formats[0].translated })
+                                         "imgurl": images,
+                                         "type": item.formats[0].translated,
+                                        "fulldata": item})
                 }
             }
             fetching = false

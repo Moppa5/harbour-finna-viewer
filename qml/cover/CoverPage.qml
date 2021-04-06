@@ -3,11 +3,20 @@ import Sailfish.Silica 1.0
 
 CoverBackground {
 
-    Label {
-        id: label
-        anchors.left: parent.left
-        padding: Theme.paddingMedium
-        text: qsTr("Latest query")
+    Column {
+        anchors.centerIn: parent
+
+        Label {
+            id: title
+            text: (app.queryField !== "") ? qsTr("Viimeisin haku") : qsTr("Ei hakua")
+        }
+
+        Label {
+            id: latestquery
+            visible: app.queryField !== ""
+            text: "'" + app.queryField + "'"
+            horizontalAlignment: Qt.AlignCenter
+        }
     }
 
     CoverActionList {
@@ -15,11 +24,12 @@ CoverBackground {
 
         CoverAction {
             iconSource: "image://theme/icon-m-refresh"
+            onTriggered: app.fetchQuery(app.queryField, false)
         }
     }
 
     BusyIndicator {
-        running: false
+        running: app.fetching
         anchors.centerIn: parent
         size: BusyIndicatorSize.Large
     }

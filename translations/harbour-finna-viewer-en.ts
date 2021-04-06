@@ -17,8 +17,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../qml/pages/QueryView.qml" line="15"/>
+        <source>Type search parameters, name or anything</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../qml/pages/QueryView.qml" line="17"/>
         <source>Type query here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/QueryView.qml" line="71"/>
+        <source>More results</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

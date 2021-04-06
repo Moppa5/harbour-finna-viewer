@@ -7,22 +7,27 @@ Page {
 
     PageHeader {
         id: headertitle
-        title: qsTr("Finna Viewer")
+        title: qsTr("Finna-hakusovellus")
+    }
+
+    Label {
+        anchors.centerIn: parent
+        visible: !app.fetching && app.queryResults.count === 0
+        text: qsTr("Ei hakutuloksia")
+        font.pixelSize: Theme.fontSizeLarge
     }
 
     TextField {
         id: queryfield
-        description: qsTr("Type search parameters, name or anything")
+        description: qsTr("Hae nimellä tai muulla nimikkeellä")
         anchors.top: headertitle.bottom
-        placeholderText: qsTr("Type query here")
+        placeholderText: qsTr("Hae...")
         EnterKey.iconSource: "image://theme/icon-m-enter"
         EnterKey.onClicked: focus = false
 
         onActiveFocusChanged: {
-            if (text) {
-                app.queryField = text
-                fetchQuery(text)
-            }
+            app.queryField = text
+            fetchQuery(text)
         }
 
         onClicked: text = ""
@@ -67,11 +72,12 @@ Page {
 
        PushUpMenu {
            id: menu
+           visible: app.queryResults.count !== 0
            MenuItem {
-               text: qsTr("More results")
+               text: qsTr("Lataa lisää")
                onClicked: {
                    app.pageNumber += 1
-                   app.fetchQuery("bowie", true)
+                   app.fetchQuery(app.queryField, true)
                    menu.close()
                }
            }
@@ -90,5 +96,5 @@ Page {
         }
     }
 
-    Component.onCompleted: fetchQuery("bowie")
+    Component.onCompleted: app.fetchQuery("",false)
 }
